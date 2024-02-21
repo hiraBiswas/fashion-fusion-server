@@ -48,6 +48,14 @@ async function run() {
     res.send(result);
   });
 
+  app.get('/clothes/:id', async (req, res) => {
+    const id = req.params.id;
+    const query = { _id: new ObjectId(id) }
+    const result = await clothesCollection.findOne(query);
+    res.send(result);
+  })
+
+
   app.post('/cart', async (req, res) => {
       
     const cartItem = req.body;
@@ -67,6 +75,27 @@ async function run() {
 
 
  
+  app.put('/clothes/:id', async (req, res) => {
+    const id = req.params.id;
+    const filter = { _id: new ObjectId(id) }
+    const options = { upsert: true };
+    const updateProduct = req.body;
+
+    const product = {
+      $set: {
+        image: updateProduct.image,
+        name: updateProduct.name,
+        brandName: updateProduct.brandName,
+        price: updateProduct.price,
+        type: updateProduct.type,
+        rating: updateProduct.rating,
+        description: updateProduct.description
+      }
+    }
+
+    const result = await clothesCollection.updateOne(filter, product, options);
+    res.send(result);
+  })
 
 
      // Send a ping to confirm a successful connection
