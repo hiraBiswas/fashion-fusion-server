@@ -40,18 +40,23 @@ async function run() {
   });
 
 
-//   app.get('/truck/:id', async (req, res) => {
-//     const id = req.params.id;
-//     const query = { _id: new ObjectId(id) }
-//     const result = await truckCollection.findOne(query);
-//     res.send(result);
-//   })
+
 
   app.post('/clothes', async (req, res) => {
     const item = req.body;
     const result = await clothesCollection.insertOne(item);
     res.send(result);
   });
+
+  app.post('/cart', async (req, res) => {
+      
+    const cartItem = req.body;
+    console.log(cartItem)
+    const result = await cartCollection.insertOne(cartItem);
+  
+    res.send(result);
+  });
+
 
 
 
